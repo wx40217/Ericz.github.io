@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[UVALive - 3026 Period]]></title>
+    <url>%2F2019%2F04%2F21%2FUVALive-3026-Period%2F</url>
+    <content type="text"><![CDATA[For each prefix of a given string S with N characters (each character has an ASCII code between 97 and126, inclusive), we want to know whether the prefix is a periodic string. That is, for each i (2 ≤ i ≤ N)we want to know the largest K &gt; 1 (if there is one) such that the prefix of S with length i can bewritten as AK, that is A concatenated K times, for some string A. Of course, we also want to knowthe period K.InputThe input file consists of several test cases. Each test case consists of two lines. The first one containsN (2 ≤ N ≤ 1000000) the size of the string S. The second line contains the string S. The input fileends with a line, having the number zero on it.OutputFor each test case, output ‘Test case #’ and the consecutive test case number on a single line; then, foreach prefix with length i that has a period K &gt; 1, output the prefix size i and the period K separatedby a single space; the prefix sizes must be in increasing order. Print a blank line after each test case.Sample Input3aaa12aabaabaabaab0Sample OutputTest case #12 23 3Test case #22 26 29 312 4这题说是kmp，其实是用到了一部分kmp的思想。kmp网上的介绍很多了不做赘述，这里用到的实际是next数组的思想。很容易想到，如果你和一个子串不能匹配，那么和他相同的子串你也不能匹配。next数组的作用就是告诉程序，我这前边有多少个字符是已经出现过了，你看着匹配吧。放到这个程序里，就是你已经知道next数组里重复的个数了，如果k(i-next[i])=i成立，那就是一个循环节uva居然不能用next命名 搞得我ce了一次AC代码：12345678910111213141516171819202122232425262728293031323334#include &lt;bits/stdc++.h&gt;using namespace std;const int maxn=1e6+10;int f[maxn];string p;int main()&#123; int n,kase=0; while(cin&gt;&gt;n&amp;&amp;n) &#123; cin&gt;&gt;p; string t; f[0]=0; f[1]=0; for(int i=1;i&lt;n;i++) &#123; int j=f[i]; while(j&amp;&amp;p[i]!=p[j]) j=f[j]; f[i+1]=(p[i]==p[j]?j+1:0); &#125; printf("Test case #%d\n",++kase); for(int i=2;i&lt;=n;i++) if(f[i]&gt;0 &amp;&amp; i%(i-f[i])==0) cout&lt;&lt;i&lt;&lt;' '&lt;&lt;i/(i-f[i])&lt;&lt;endl; cout&lt;&lt;endl; &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>训练</category>
+      </categories>
+      <tags>
+        <tag>KMP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[UVALive - 3942 Remember the Word]]></title>
     <url>%2F2019%2F04%2F19%2FUVALive-3942-Remember-the-Word%2F</url>
     <content type="text"><![CDATA[Neal is very curious about combinatorial problems, and now here comes a problem about words. Knowing that Ray has a photographic memory and this may not trouble him, Neal gives it to Jiejie.Since Jiejie can’t remember numbers clearly, he just uses sticks to help himself. Allowing for Jiejie’sonly 20071027 sticks, he can only record the remainders of the numbers divided by total amount ofsticks.The problem is as follows: a word needs to be divided into small pieces in such a way that eachpiece is from some given set of words. Given a word and the set of words, Jiejie should calculate thenumber of ways the given word can be divided, using the words in the set.InputThe input file contains multiple test cases. For each test case: the first line contains the given wordwhose length is no more than 300 000.The second line contains an integer S, 1 ≤ S ≤ 4000.Each of the following S lines contains one word from the set. Each word will be at most 100characters long. There will be no two identical words and all letters in the words will be lowercase.There is a blank line between consecutive test cases.You should proceed to the end of file.OutputFor each test case, output the number, as described above, from the task description modulo 20071027.Sample Inputabcd4abcdabSample OutputCase 1: 2很容易能反应出这是一道DP，设dp(i)表示原字符串的子串[i,len-1]的划分方案数，那么dp(i)=sum{dp(i+len(x)) | x是某个单词，同时x为[i,len-1]的前缀 }，边界是dp(len)=1。但是问题是怎么找出是前缀的x，这时候就要使用前缀树了。说是这么说 我做的还是迷迷糊糊的AC代码：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475#include &lt;bits/stdc++.h&gt;using namespace std;const int mod=20071027;const int maxn=4e5+10;string p,s;int trie[maxn][26],tot;int deep[maxn];bool isword[maxn];int dp[maxn];int num,len;void init()&#123; len=p.size(); tot=0; memset(trie,0,sizeof(trie)); memset(isword,0,sizeof(isword)); memset(deep,0,sizeof(deep)); memset(dp,-1,sizeof(dp));&#125;int dfs(int i)&#123; if(i==len) return 1; if(dp[i]!=-1) return dp[i]; int node=0,ans=0; for(int j=i;j&lt;len;++j) &#123; int id=p[j]-'a'; node=trie[node][id]; if(isword[node]) ans=(ans+dfs(i+deep[node]))%mod; if(!node) break; &#125; return dp[i]=ans;&#125;void insert()&#123; int node=0; for(int i=0;s[i];i++) &#123; int id=s[i]-'a'; if(!trie[node][id]) &#123; trie[node][id]=++tot; deep[trie[node][id]]=deep[node]+1; &#125; node=trie[node][id]; &#125; isword[node]=true;&#125;int main()&#123; int kase=0; while(cin&gt;&gt;p) &#123; init(); cin&gt;&gt;num; while(num--) &#123; cin&gt;&gt;s; insert(); &#125; int ans=dfs(0); printf("Case %d: %d\n",++kase,ans); &#125; return 0;&#125;]]></content>
@@ -8,8 +19,8 @@
         <category>训练</category>
       </categories>
       <tags>
-        <tag>dp</tag>
-        <tag>前缀树</tag>
+        <tag>DP</tag>
+        <tag>字典树</tag>
       </tags>
   </entry>
   <entry>
