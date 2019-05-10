@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[moss代码查重系统的使用及注意点]]></title>
+    <url>%2F2019%2F05%2F10%2Fmoss%E4%BB%A3%E7%A0%81%E6%9F%A5%E9%87%8D%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%B3%A8%E6%84%8F%E7%82%B9%2F</url>
+    <content type="text"><![CDATA[这两天校赛搬砖，一个很重要的砖就是对代码进行查重。请教了学长以后，基本掌握了使用moss进行查重的方法。moss是斯坦福大学开发的一套查重系统（官网链接），它支持多种语言的查重，对付常用的反查重套路也有自己的手段。###安装与使用标准的moss使用方式需要使用邮箱申请ID，但是邮件一写进去就石沉大海。这里我们使用一个GUI的客户端mistletoe,这也是moss官网推荐的方法之一，下载安装即可。安装后的界面如图选择代码文件夹就行，因为是对AC代码查重，也不需要加入BASE FILE（如果喜欢的话可以把标程加上），注意如果代码是txt格式的话要再后缀里自己加上*.txt。然后选择对应的语言（cc就是c++），点击RUN QUERY，如果没有出现问题就会打开一个网页显示查重的结果。##注意moss的代码文件编码必须是ANSI（中文即GBK），如果代码含有中文就会采用UTF8格式，建议查重前先进行统一的代码编码转换。]]></content>
+      <categories>
+        <category>水</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+        <tag>搬砖</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CodeForces - 313B Ilya and Queries]]></title>
+    <url>%2F2019%2F05%2F10%2FCodeForces-313B-Ilya-and-Queries%2F</url>
+    <content type="text"><![CDATA[Ilya the Lion wants to help all his friends with passing exams. They need to solve the following problem to pass the IT exam.You’ve got string s = s1s2… sn (n is the length of the string), consisting only of characters “.” and “#” and m queries. Each query is described by a pair of integers li, ri (1 ≤ li &lt; ri ≤ n). The answer to the query li, ri is the number of such integers i (li ≤ i &lt; ri), that si = si + 1.Ilya the Lion wants to help his friends but is there anyone to help him? Help Ilya, solve the problem.###InputThe first line contains string s of length n (2 ≤ n ≤ 105). It is guaranteed that the given string only consists of characters “.” and “#”.The next line contains integer m (1 ≤ m ≤ 105) — the number of queries. Each of the next m lines contains the description of the corresponding query. The i-th line contains integers li, ri (1 ≤ li &lt; ri ≤ n).###OutputPrint m integers — the answers to the queries in the order in which they are given in the input.###Examples1234567891011121314151617181920212223242526Input......43 42 31 62 6Output1154Input#..###51 35 61 53 63 4Output11220这题本身是很水的题，但是扫描的思想很有趣，直接用数组记录到i位置前面有多少组重复的，到时候减一下就完事，很类似于前缀和。###AC代码12345678910111213141516171819202122232425#include &lt;bits/stdc++.h&gt;using namespace std;const int maxn=1e5+10;int a[maxn];int main()&#123; string s; memset(a,0,sizeof(a)); cin&gt;&gt;s; for(int i=1;i&lt;s.size();i++) if(s[i]==s[i-1]) a[i]=a[i-1]+1; else a[i]=a[i-1]; int t; cin&gt;&gt;t; while(t--) &#123; int l,r; scanf("%d%d",&amp;l,&amp;r); cout&lt;&lt;a[r-1]-a[l-1]&lt;&lt;endl; &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>训练</category>
+      </categories>
+      <tags>
+        <tag>水</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CodeForces - 520B Two Buttons]]></title>
     <url>%2F2019%2F05%2F10%2FCodeForces-520B-Two-Buttons%2F</url>
     <content type="text"><![CDATA[Vasya has found a strange device. On the front panel of a device there are: a red button, a blue button and a display showing some positive integer. After clicking the red button, device multiplies the displayed number by two. After clicking the blue button, device subtracts one from the number on the display. If at some point the number stops being positive, the device breaks down. The display can show arbitrarily large numbers. Initially, the display shows number n.Bob wants to get number m on the display. What minimum number of clicks he has to make in order to achieve this result?###InputThe first and the only line of the input contains two distinct integers n and m (1 ≤ n, m ≤ 104), separated by a space .###OutputPrint a single number — the minimum number of times one needs to push the button required to get the number m out of number n.###ExamplesInput4 6Output2Input10 1Output9##NoteIn the first example you need to push the blue button once, and then push the red button once.In the second example, doubling the number is unnecessary, so we need to push the blue button nine times.这题好像以前做过。。。给你n和m，只能把n减一或乘二，问把n变到m需要多少步。网上很多题解都是BFS，看的我都吓坏了，现在CF的B都已经BFS了嘛。但实际上我局得类似贪心或者思维的做法更好。首先，对n操作和对m逆向操作是等价的，而当$n&gt;m$时n只能靠减自己来变成n，而乘二一定是比减一划算的，所以就是尽量乘二，不能乘二就减一。###AC代码1234567891011121314151617181920212223#include &lt;bits/stdc++.h&gt;using namespace std;int main()&#123; int n,m; cin&gt;&gt;n&gt;&gt;m; int ans=0; while(n&lt;m) &#123; if(m&amp;1) &#123; m++; ans++; &#125; m&gt;&gt;=1; ans++; &#125; ans+=n-m; cout&lt;&lt;ans&lt;&lt;endl; return 0;&#125;最近状态很差，只能刷刷水题找找手感和自信了……但是做水题都会卡壳，怎么办呢……]]></content>
