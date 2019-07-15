@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[CodeForces 1185B Email from Polycarp]]></title>
+    <url>%2F2019%2F07%2F15%2FCodeForces-1185B-Email-from-Polycarp%2F</url>
+    <content type="text"><![CDATA[Methodius received an email from his friend Polycarp. However, Polycarp’s keyboard is broken, so pressing a key on it once may cause the corresponding symbol to appear more than once (if you press a key on a regular keyboard, it prints exactly one symbol).For example, as a result of typing the word “hello”, the following words could be printed: “hello”, “hhhhello”, “hheeeellllooo”, but the following could not be printed: “hell”, “helo”, “hhllllooo”.Note, that when you press a key, the corresponding symbol must appear (possibly, more than once). The keyboard is broken in a random manner, it means that pressing the same key you can get the different number of letters in the result.For each word in the letter, Methodius has guessed what word Polycarp actually wanted to write, but he is not sure about it, so he asks you to help him.You are given a list of pairs of words. For each pair, determine if the second word could be printed by typing the first one on Polycarp’s keyboard.InputThe first line of the input contains one integer n (1≤n≤105) — the number of pairs to check. Further input contains n descriptions of pairs.The first line of each description contains a single non-empty word s consisting of lowercase Latin letters. The second line of the description contains a single non-empty word t consisting of lowercase Latin letters. The lengths of both strings are not greater than 106.It is guaranteed that the total length of all words s in the input is not greater than 106. Also, it is guaranteed that the total length of all words t in the input is not greater than 106.OutputOutput n lines. In the i-th line for the i-th pair of words s and t print YES if the word t could be printed by typing the word s. Otherwise, print NO.复健真快乐你键盘坏了，打字会粘连（打一个字母可能出来几个字母），给你字符串S和T，判断T是否可能是你打S打出来的。一段时间不做题水平确实有下降，这题第一反映居然是开map统计每个字母出现次数。实际我们可以发现，T可以是打S打出来只有两种情况：1、对应位置相同 2、对应位置不同但是连着的前几个字符相同且和S的对应位置相同 然后模拟就行了。要注意T前面和S相同但是比S尾部少字母的情况。AC代码：1234567891011121314151617181920212223242526272829303132333435#include &lt;bits/stdc++.h&gt;using namespace std;int main()&#123; int n; cin&gt;&gt;n; while(n--) &#123; string a,b; cin&gt;&gt;a&gt;&gt;b; int flag=1; int pos=0; for(int i=0;i&lt;b.size();i++) &#123; if(b[i]==a[pos]) pos++; else if (i&gt;0&amp;&amp;b[i-1]==b[i]) continue; else &#123; flag=0; break; &#125; &#125; if(pos!=a.size()) flag=0; if(flag) cout&lt;&lt;"YES"&lt;&lt;endl; else cout&lt;&lt;"NO"&lt;&lt;endl; &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>训练</category>
+      </categories>
+      <tags>
+        <tag>水</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[南昌打铁感想]]></title>
     <url>%2F2019%2F06%2F05%2F%E5%8D%97%E6%98%8C%E6%89%93%E9%93%81%E6%84%9F%E6%83%B3%2F</url>
     <content type="text"><![CDATA[嘛，其实也没啥感想。只能说自己太菜了吧，就撕一道题还撕错了。cls主张要分工合作，但是现在的问题是会的东西太少，分工合作也不现实。准备了好久的各种数据结构，到最后也就碰上个字典树，AC自动机完全没题，线段树出了也不会做（苦笑）。再加上有新人进队，以后去比赛还要先打架，以我现在的实力大概是没机会出去了。仔细想想，还是刷CF吧，现在已经有点不知道该学什么了，一边做题一边找不会的点来学，可能还要机会吧。]]></content>
