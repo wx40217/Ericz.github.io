@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Codeforces 1204D2 Kirk and a Binary String (hard version)]]></title>
+    <url>%2F2019%2F10%2F10%2FCodeforces-1204D2-Kirk-and-a-Binary-String%2F</url>
+    <content type="text"><![CDATA[The only difference between easy and hard versions is the length of the string. You can hack this problem if you solve it. But you can hack the previous problem only if you solve both problems.Kirk has a binary string s (a string which consists of zeroes and ones) of length n and he is asking you to find a binary string t of the same length which satisfies the following conditions:For any l and r (1≤l≤r≤n) the length of the longest non-decreasing subsequence of the substring slsl+1…sr is equal to the length of the longest non-decreasing subsequence of the substring tltl+1…tr;The number of zeroes in t is the maximum possible.A non-decreasing subsequence of a string p is a sequence of indices i1,i2,…,ik such that i1&lt;i2&lt;…&lt;ik and pi1≤pi2≤…≤pik. The length of the subsequence is k.If there are multiple substrings which satisfy the conditions, output any.InputThe first line contains a binary string of length not more than 105.OutputOutput a binary string which satisfied the above conditions. If there are many such strings, output any of them.ExamplesinputCopy110outputCopy010inputCopy010outputCopy010inputCopy0001111outputCopy0000000inputCopy0111001100111011101000outputCopy0011001100001011101000NoteIn the first example:For the substrings of the length 1 the length of the longest non-decreasing subsequnce is 1;For l=1,r=2 the longest non-decreasing subsequnce of the substring s1s2 is 11 and the longest non-decreasing subsequnce of the substring t1t2 is 01;For l=1,r=3 the longest non-decreasing subsequnce of the substring s1s3 is 11 and the longest non-decreasing subsequnce of the substring t1t3 is 00;For l=2,r=3 the longest non-decreasing subsequnce of the substring s2s3 is 1 and the longest non-decreasing subsequnce of the substring t2t3 is 1;The second example is similar to the first one.给你一个01字符串，求出一个字符串，满足：1.等长 2.两个字符串任意区间的最长非递减序列长度相等。假设某个区间的首字母为x。那么有两种情况：1、x为0。通过贪心的思想可以很容易得出，当x为0时他必定是最长非递减子序列的一部分，所以他不能被更改，如果他被更改了最长非递减子序列就会变短。2.x为1。如果他是最长非递减子序列的一部分，那么他变为0不会影响总的长度（变为0也必定是最长非递减子序列的一部分）。如果他不是最长非递减子序列的一部分，他变为0会成为最长非递减子序列的一部分，长度会变化。那么首位的1什么时候才能成为最长非递减子序列的一部分呢，答案是当这个区间1比0多的时候！当1比0多的时候，最长非递减子序列就是111…..111，首位改完变成011…..111也不影响。所以只要统计0和1的数量，进行修改就行了。太秀了，我还想了半天怎么dp套二分。。。AC代码1234567891011121314151617181920212223242526#include &lt;bits/stdc++.h&gt;using namespace std;string s;int main()&#123; int zero =0,one =0; cin&gt;&gt;s; int n=s.size(); for(int i=n-1;i&gt;=0;i--) &#123; if(s[i]=='0') zero++; else &#123; one++; if(one&gt;zero) &#123; s[i]='0'; one--; //zero++; &#125; &#125; &#125; cout&lt;&lt;s&lt;&lt;endl;&#125;]]></content>
+      <categories>
+        <category>训练</category>
+      </categories>
+      <tags>
+        <tag>贪心</tag>
+        <tag>思维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[HDU6581/2019HDU多校第一场1004 Vacation]]></title>
+    <url>%2F2019%2F07%2F23%2FHDU6581-2019HDU%E5%A4%9A%E6%A0%A1%E7%AC%AC%E4%B8%80%E5%9C%BA1004-Vacation%2F</url>
+    <content type="text"><![CDATA[Tom and Jerry are going on a vacation. They are now driving on a one-way road and several cars are in front of them. To be more specific, there are n cars in front of them. The ith car has a length of li, the head of it is si from the stop-line, and its maximum velocity is vi. The car Tom and Jerry are driving is l0 in length, and s0 from the stop-line, with a maximum velocity of v0.The traffic light has a very long cycle. You can assume that it is always green light. However, since the road is too narrow, no car can get ahead of other cars. Even if your speed can be greater than the car in front of you, you still can only drive at the same speed as the anterior car. But when not affected by the car ahead, the driver will drive at the maximum speed. You can assume that every driver here is very good at driving, so that the distance of adjacent cars can be kept to be 0.Though Tom and Jerry know that they can pass the stop-line during green light, they still want to know the minimum time they need to pass the stop-line. We say a car passes the stop-line once the head of the car passes it.Please notice that even after a car passes the stop-line, it still runs on the road, and cannot be overtaken.InputThis problem contains multiple test cases.For each test case, the first line contains an integer n (1≤n≤105,∑n≤2×106), the number of cars.The next three lines each contains n+1 integers, li,si,vi (1≤si,vi,li≤109). It’s guaranteed that si≥si+1+li+1,∀i∈[0,n−1]OutputFor each test case, output one line containing the answer. Your answer will be accepted if its absolute or relative error does not exceed 10−6.Formally, let your answer be a, and the jury’s answer is b. Your answer is considered correct if |a−b|max(1,|b|)≤10−6.The answer is guaranteed to exist.Sample Input12 27 12 121 2 210 7 16 2 1Sample Output3.50000000005.0000000000给你n+1辆车子的距离终点线的距离，长度和速度。单向道，后面的车如果追上前面的车也只能以前面的速度贴着开（不能超车），问0号车经过终点线的时间。乍一看这是道模拟题，但实际上可以O(n)：想想现在有很多车连在一起，尾端是0号车，那么整体的速度只受最前面的车速影响，时间就是头车距离终点线的时间加上连一起的长度除以头车的速度。因为是单向道，所以0号车一定会被堵在最后面，所以假设每辆车都可能是头车，遍历一遍求出最大值就是0号车过线的时间了（心疼0号车）AC代码：1234567891011121314151617181920212223242526272829#include &lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;const int maxn=2e5+10;int l[maxn],s[maxn],v[maxn],sum[maxn];int main()&#123; int n; while(cin&gt;&gt;n)&#123; for(int i=1;i&lt;=n+1;i++) scanf("%d",&amp;l[i]); for(int i=1;i&lt;=n+1;i++) scanf("%d",&amp;s[i]); for(int i=1;i&lt;=n+1;i++) scanf("%d",&amp;v[i]); sum[1]=0; for(int i=2;i&lt;=n+1;i++) sum[i]=sum[i-1]+l[i]; double ans=0; for(int i=1;i&lt;=n+1;i++) ans=max(ans,(sum[i]+s[i])*1.0/v[i]); printf("%.10f\n",ans); &#125;&#125;]]></content>
+      <categories>
+        <category>补题</category>
+      </categories>
+      <tags>
+        <tag>思维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[2019牛客多校 第一场E ABBA]]></title>
+    <url>%2F2019%2F07%2F20%2F2019%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1-%E7%AC%AC%E4%B8%80%E5%9C%BAE-ABBA%2F</url>
+    <content type="text"><![CDATA[给你n+m个A和n+m个B，问有多少种方案能组成n个子序列为AB，M个为BA。因为子序列是不连续的。所以运用贪心的思想，（下述都以A的放置为例，B完全同理）在放置A的时候只有两种情况：放在原串的最前面（用来和后面的B组成AB），放在原串的最后面（和前面的B组成BA）。用DP[x][y]表示放了x个A和Y个B时尚在要求范围之内的方案。显然边界dp[0][0]为1（什么都不放的空串肯定在范围内）那么，放置A时有两种情况：1.x(j,m) 即AB串够了，但是当前串中多了B，可以直接把A放在最后面（前面肯定有B跟他匹配），dp[i+1][j]+=dp[i][j]；B也是同理。AC代码：123456789101112131415161718192021222324252627282930#include &lt;bits/stdc++.h&gt;using namespace std;typedef long long ll;const int mod=1e9+7;const int maxn=1e3+10;ll dp[2*maxn][2*maxn];int main()&#123; int n,m; while(cin&gt;&gt;n&gt;&gt;m) &#123; memset(dp,0,sizeof(dp)); dp[0][0]=1; for(int i=0;i&lt;=n+m;i++) for(int j=0;j&lt;=n+m;j++) &#123; if(i&lt;n||i-n&lt;min(j,m)) dp[i+1][j]=(dp[i+1][j]+dp[i][j])%mod; if(j&lt;m||j-m&lt;min(i,n)) dp[i][j+1]=(dp[i][j+1]+dp[i][j])%mod; &#125; cout&lt;&lt;dp[n+m][n+m]&lt;&lt;endl; &#125;&#125;]]></content>
+      <categories>
+        <category>补题</category>
+      </categories>
+      <tags>
+        <tag>贪心</tag>
+        <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[2019牛客多校 第一场A Equivalent Prefixes]]></title>
     <url>%2F2019%2F07%2F19%2F2019%E7%89%9B%E5%AE%A2%E5%A4%9A%E6%A0%A1-%E7%AC%AC%E4%B8%80%E5%9C%BAA-Equivalent-Prefixes%2F</url>
     <content type="text"><![CDATA[定义RMQ(u,l,r)为数组u在[l,r]上的最小值的位置。给你两个长度相等的数组a和b，保证两个数组内部没有相同元素，定义数p，使两数组在[1,p]中的任意区间RMQ的值的位置相等。找出p的最大值。官方题解：做法 1 • 题中的“equivalent”等价于笛卡尔树相同 • 二分答案，比较两个前缀的笛卡尔树 O(n log n) •做法 2 • 对于数组 a，定义 lasta(i) = max { j : j &lt; i and aj &gt; ai} • 如果 lasta = lastb，那么数组 a 和 b“equivalent” 证明：n, last(n), last(last(n)), … 是笛卡尔树的最右路径，递归构造 • 单调队列求 last 并比较 O(n)笛卡尔树本质是一颗小根堆（也可以大根堆，为了叙述方便用小根堆）化的二叉搜索树。显然的，这样的话[l,r]区间的RMQ就是l结点和r结点的lca。由于笛卡尔树树深的期望是logn，甚至找lca不用tarjan，直接暴力复杂度就很理想。放到这道题里，因为从一开始，所以可以直接二分p的位置，根据p的位置建立笛卡尔树。因为任意区间的RMQ都要相同，所以这两棵笛卡尔树要相同，每次比较一下就可。最后ac用的是单调栈，不知道和做法2的单调队列是不是同一种思想。单调栈可以用来表示一种延伸性，放到这题里，就是可以表示以栈底的元素（的位置）作为RMQ的区间可以左右延伸到多远。也就是说当前栈的区间就是任取lr构成的[l,r]区间的RMQ是栈底的区间。因此如果ab的单调栈长度不一样，一定是RMQ的区间发生了偏移。好像还不是很有说服力 我再想想漏条件了……数是从1-n的，那么单调栈长度相同时最小值一定也是相同的……AC代码：123456789101112131415161718192021222324252627282930313233343536373839#include &lt;bits/stdc++.h&gt;using namespace std;const int maxn=1e5+10;int a[maxn],b[maxn];int main()&#123; int n; while(cin&gt;&gt;n) &#123; for(int i=1;i&lt;=n;i++) scanf("%d",&amp;a[i]); for(int i=1;i&lt;=n;i++) scanf("%d",&amp;b[i]); stack&lt;int&gt; sa; stack&lt;int&gt; sb; int ans=1; sa.push(a[1]); sb.push(b[1]); while(ans&lt;n) &#123; while (!sa.empty()&amp;&amp;a[ans+1]&lt;sa.top()) sa.pop(); if(sa.empty()||a[ans+1]&gt;sa.top()) sa.push(a[ans+1]); while (!sb.empty()&amp;&amp;b[ans+1]&lt;sb.top()) sb.pop(); if(sb.empty()||b[ans+1]&gt;sb.top()) sb.push(b[ans+1]); if(sa.size()!=sb.size()) break; ans++; &#125; cout&lt;&lt;ans&lt;&lt;endl; &#125;&#125;]]></content>
@@ -8,7 +43,8 @@
         <category>补题</category>
       </categories>
       <tags>
-        <tag>单调栈，笛卡尔树</tag>
+        <tag>单调栈</tag>
+        <tag>笛卡尔树</tag>
       </tags>
   </entry>
   <entry>
@@ -210,8 +246,8 @@
         <category>训练</category>
       </categories>
       <tags>
-        <tag>AC自动机</tag>
         <tag>DP</tag>
+        <tag>AC自动机</tag>
       </tags>
   </entry>
   <entry>
